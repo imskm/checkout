@@ -16,7 +16,7 @@ First in the `composer.json` file add these values:
 	}
 ],
 "require": {
-	"imskm/checkout": "^1"
+	"imskm/checkout": "^0.1"
 }
 ```
 
