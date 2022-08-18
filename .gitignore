@@ -1,0 +1,6 @@
+temp/
+app/
+vendor/
+
+.*
+!.gitignore
