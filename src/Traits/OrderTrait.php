@@ -13,6 +13,7 @@ trait OrderTrait
 	protected $_order_items = [];
 	public $_user;
 	public $_error;
+	public $_loaded = false;
 
 	public function create()
 	{
@@ -166,6 +167,7 @@ trait OrderTrait
 			$order = $order->first();
 		}
 
+		$order->_loaded = true;
 		foreach ($order->orderItems() as $oi) {
 			$order->addOrderItem($oi);
 		}

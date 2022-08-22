@@ -9,6 +9,7 @@ trait OrderItemTrait
 {
 	protected $_product;
 	protected $_qty;
+	public $_loaded = false;
 
 	public function create($user, $order)
 	{
@@ -37,7 +38,7 @@ trait OrderItemTrait
 	{
 		if (!is_null($qty)) {
 			$this->_qty = $qty;
-		} elseif (is_null($this->_product)) {
+		} elseif ($this->_loaded) {
 			return $this->qty;
 		}
 
@@ -46,17 +47,29 @@ trait OrderItemTrait
 
 	public function markedPrice()
 	{
-		return $this->product()->markedPrice();
+		if (!$this->_loaded) {
+			return $this->product()->markedPrice();
+		}
+
+		return $this->price_mp / 100;
 	}
 
 	public function salePrice()
 	{
-		return $this->product()->salePrice();
+		if (!$this->_loaded) {
+			return $this->product()->salePrice();
+		}
+
+		return $this->price_sp / 100;
 	}
 
 	public function discount()
 	{
-		return $this->product()->discount();
+		if (!$this->_loaded) {
+			return $this->product()->discount();
+		}
+
+		return $this->discount / 100;
 	}
 
 	public function totalMarkedPrice()
@@ -114,6 +127,7 @@ trait OrderItemTrait
 		$order_items = static::where('order_id', $order_id)->get();
 
 		foreach ($order_items as $oi) {
+			$oi->_loaded = true;
 			$oi->addProduct($oi->product(), $oi->qty());
 		}
 
