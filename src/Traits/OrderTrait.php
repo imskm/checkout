@@ -3,6 +3,7 @@
 namespace Fantom\Checkout\Traits;
 
 use Fantom\Checkout\Interfaces\OrderInterface;
+use Fantom\Checkout\Interfaces\CouponInterface;
 use Fantom\Checkout\Interfaces\OrderItemInterface;
 
 /**
@@ -12,6 +13,7 @@ trait OrderTrait
 {
 	protected $_order_items = [];
 	public $_user;
+	public $_coupon;
 	public $_error;
 	public $_loaded = false;
 
@@ -78,6 +80,16 @@ trait OrderTrait
 	}
 
 	public function discount()
+	{
+		if ($this->_order_items) {
+			return $this->sumOrderItemTotalDiscount()
+				+ $this->couponDiscount();
+		}
+
+		return $this->discount / 100;
+	}
+
+	public function mrpDiscount()
 	{
 		if ($this->_order_items) {
 			return $this->sumOrderItemTotalDiscount();
@@ -173,5 +185,28 @@ trait OrderTrait
 		}
 
 		return $order;
+	}
+
+	public function applyCoupon(CouponInterface $coupon)
+	{
+		$this->_coupon = $coupon;
+	}
+
+	public function coupon()
+	{
+		if ($this->_coupon) {
+			return $this->_coupon;
+		}
+
+		return $this->getCouponForOrder($this->thisId());
+	}
+
+	public function couponDiscount()
+	{
+		if (!$this->_coupon) {
+			return 0.0;
+		}
+
+		return $this->_coupon->discount();
 	}
 }

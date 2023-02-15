@@ -35,6 +35,10 @@ interface OrderInterface
 
 	public function discount();
 
+	public function mrpDiscount();
+
+	public function couponDiscount();
+
 	public function tax();
 
 	public function buildOrder(array $data = []): void;

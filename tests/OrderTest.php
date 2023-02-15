@@ -53,10 +53,10 @@ class OrderTest extends TestCase
 
 		// Check order values
 		$this->assertSame(2200, $order->grossTotal());
-		$this->assertSame(1800, $order->subTotal());
-		$this->assertSame(1800, $order->amount());
-		$this->assertSame(1800, $order->total());
-		$this->assertSame(100 + 300, $order->discount());
+		$this->assertSame(1800.0, $order->subTotal());
+		$this->assertSame(1800.0, $order->amount());
+		$this->assertSame(1800.0, $order->total());
+		$this->assertSame(100 + 300.0, $order->discount());
 	}
 
 	public function test_order_can_be_created_in_db()
@@ -193,10 +193,10 @@ class OrderTest extends TestCase
 		$this->assertNotNull($loaded_order);
 		// Check order values
 		$this->assertSame(2200, $loaded_order->grossTotal());
-		$this->assertSame(1800, $loaded_order->subTotal());
-		$this->assertSame(1800, $loaded_order->amount());
-		$this->assertSame(1800, $loaded_order->total());
-		$this->assertSame(100 + 300, $loaded_order->discount());
+		$this->assertSame(1800.0, $loaded_order->subTotal());
+		$this->assertSame(1800.0, $loaded_order->amount());
+		$this->assertSame(1800.0, $loaded_order->total());
+		$this->assertSame(100 + 300.0, $loaded_order->discount());
 		
 		$this->assertEquals(2, count($order->orderItems()));
 		$this->assertSame('Roadster Men Jeans 001', $loaded_order->orderItems()[0]->product()->title);
@@ -266,10 +266,10 @@ class OrderTest extends TestCase
 		$this->assertNotNull($loaded_order);
 		// Check order values
 		$this->assertSame(2200, $loaded_order->grossTotal());
-		$this->assertSame(1800, $loaded_order->subTotal());
-		$this->assertSame(1800, $loaded_order->amount());
-		$this->assertSame(1800, $loaded_order->total());
-		$this->assertSame(100 + 300, $loaded_order->discount());
+		$this->assertSame(1800.0, $loaded_order->subTotal());
+		$this->assertSame(1800.0, $loaded_order->amount());
+		$this->assertSame(1800.0, $loaded_order->total());
+		$this->assertSame(100 + 300.0, $loaded_order->discount());
 		
 		$this->assertEquals(2, count($loaded_order->orderItems()));
 		$this->assertSame('Roadster Men Jeans 001', $loaded_order->orderItems()[0]->product()->title);
